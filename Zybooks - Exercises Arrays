@@ -1,0 +1,856 @@
+14.1 - 14.6 Arrays
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+14.3.3: Array basics for understanding
+
+Given: 
+int yearsArr[4];
+
+yearsArr[0] = 1999;
+yearsArr[1] = 2012;
+yearsArr[2] = 2025;
+
+1) How many elements in memory does the array declaration create?
+Answer: 4
+
+2)What value is stored in yearsArr[1]?
+Answer: 2012
+
+3) What value does curr = yearsArr[2] assign to curr?
+Answer: 2025
+
+4) What value does curr = yearsArr[3] assign to curr?
+Answer: Unknown. Element yearsArr[3] was never assigned, so its value is unknown, just like
+any uninitialized variable. 
+
+5) Recall that the array declaration was int yearsArr[4]. Is curr = yearsArr[4] a 
+valid assignment?
+Answer: No, yearsArr[4] does not exist.
+
+6) What is the proper way to access the first  element in array yearsArr?
+Answer: yearsArr[0]
+
+7)What are the contents of the array if the above code is followed by the statement:
+yearsArr[0] = yearsArr[2]?
+Answer: 2025, 2012, 2025, ?
+Each element is its own variable, and can be read and assigned just like any other 
+variable. yearsArr[3] was never assigned so its value us unknown.
+
+8) What is the index of the last  element for the following array: int pricesArr[100];
+Answer: 99. The 100 elements will have indices 0...99. 
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Figure 14.3.1: Array's ith element can be directly accessed using [i]: Oldest people program.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+   int oldestPeople[5]; // Source: Wikipedia.org
+   int nthPerson = 0;   // User input, Nth oldest person
+   
+   oldestPeople[0] = 122; // Died 1997 in France
+   oldestPeople[1] = 119; // Died 1999 in U.S.
+   oldestPeople[2] = 117; // Died 1993 in U.S.
+   oldestPeople[3] = 117; // Died 1998 in Canada
+   oldestPeople[4] = 116; // Died 2006 in Ecuador
+   
+   cout << "Enter N (1..5): ";
+   cin  >> nthPerson;
+   
+   if ((nthPerson >= 1) && (nthPerson <= 5)) {
+      cout << "The " << nthPerson << "th oldest person lived ";
+      cout << oldestPeople[nthPerson - 1] << " years." << endl;
+   }
+   
+   return 0;
+}
+
+~~ IN AN ARRAY THE INDEX STARTS AT 0 ~~
+
+***"The program can quickly access the Nth oldest person's age using
+oldestPeople[nthPerson - 1]. Note that the index is nthPerson - 1 rather than just
+nthPerson because an array's indices start at 0, so the 1st age is at index 0, the 2nd
+at index 1, etc.
+
+An array's index must be an integer type. The array index cannot be a floating-point type,
+even if the value is 0.0, 1.0, etc."***
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ARRAYS WITH LOOPS 
+
+Figure 14.3.2: Arrays combined with loops are powerful together: User-entered numbers.
+
+A key advantage of arrays becomes evident when used in conjunction with loops. To illustrate,
+the following program allows a user to enter 8 integer values, then prints those 8 values:
+
+#include <iostream>
+using namespace std;
+
+int main() {
+   const int NUM_ELEMENTS = 8;  // Number of elements in array
+   int userVals[NUM_ELEMENTS];  // User numbers
+   int i = 0;                   // Loop index
+   
+   cout << "Enter " << NUM_ELEMENTS << " integer values..." << endl;
+   for (i = 0; i < NUM_ELEMENTS; ++i) {
+      cout << "Value: ";
+      cin >> userVals[i];
+   }
+   
+   cout << "You entered: ";
+   for (i = 0; i < NUM_ELEMENTS; ++i) {
+      cout << userVals[i] << " ";
+   }
+   cout << endl;
+   
+   return 0;
+}
+
+"Consider how the program would have had to be written if using 8 separate variables. That
+program would have repeated variable declarations, output statements, and input statements.
+Now consider that program for NUM_ELEMENTS equal to 100, 1000, or more. With arrays and
+loops, the code would be the same as above. Only the constant literal 8 would be changed."
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Array declaration 
+
+"Like other variables, an array's elements are not automatically initialized during the variable
+declaration and should be initialized before being read. A programmer may initialize an array's
+elements in an array variable declaration:"
+
+type identifier[N] = {val0, val1, ..., valN - 1};
+
+An example is: int myArray[3] = {0, 0, 0};. For larger arrays, a loop may be used for initialization.
+
+Like other variables, the keyword const may be prepended to an array variable declaration to prevent
+changes to the array. Thus,  const int YEARS[3] = {1865, 1920, 1964}; followed by YEARS[0] = 2000;
+yields a compiler error.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+14.3.4: Array declaration and use
+
+1) Declare an array named myVals that stores 10 items of type int.
+Answer: int myVals[10];
+The value inside the [] declares 10 integer values are stored in an array called myVals.
+
+2) Assign the value stored at index 8 of array myVals to a variable x.
+Answer: x = myVals[8];
+Any element in an array can be accessed by the [] operator, as long as the element is in
+the array's scope.
+
+3) Assign the value 555 to the element at index 2 of array myVals.
+Answer: myVals[2] = 555;
+myVals[2] will be treated as if it was an int and not an array.
+
+4) Assign the value 777 to the second element of array myVals.
+Answer: myVals[1] = 777;
+Note that myVals' first element is myVals[0], so the second element is myVals[1] rather than myVals[2].
+
+5) Declare an array of ints named myVals with 4 elements each initialized to 10. The array declaration
+and initialization should be done in a single statement.
+Answer: int myVals[4] = {10, 10, 10, 10};
+The number of elements within the {} must never be greater than the size of an array.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+CHALLENGE ACTIVITY
+
+14.3.2: Printing array elements
+"Write three statements to print the first three elements of array runTimes. Follow each
+ statement with a newline. Ex: If runTime = {800, 775, 790, 805, 808}, print:
+800 
+775 
+790"
+
+#include <iostream>
+using namespace std;
+
+int main() {
+   int runTimes[5];
+
+   // Populate array
+   runTimes[0] = 800;
+   runTimes[1] = 775;
+   runTimes[2] = 790;
+   runTimes[3] = 805;
+   runTimes[4] = 808;
+
+   cout << runTimes[0] << endl;
+   cout << runTimes[1] << endl;
+   cout << runTimes[2] << endl;
+
+   return 0;
+}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+CHALLENGE ACTIVITY
+
+14.3.3: Printing array elements with a for loop.
+"Write a for loop to print all elements in courseGrades, following each element with a space
+(including the last). Print forwards, then backwards. End each loop with a newline. Ex: 
+If courseGrades = {7, 9, 11, 10}, print:
+7 9 11 10 
+10 11 9 7 
+
+Hint: Use two for loops. Second loop starts with i = NUM_VALS - 1."
+
+#include <iostream>
+using namespace std;
+
+int main() {
+   const int NUM_VALS = 4;
+   int courseGrades[NUM_VALS];
+   int i = 0;
+
+   courseGrades[0] = 7;
+   courseGrades[1] = 9;
+   courseGrades[2] = 11;
+   courseGrades[3] = 10;
+
+   /* Your solution goes here  */
+   for (i = 0; i < NUM_VALS; ++i) {           
+      cout << courseGrades[i] << " ";
+   }
+   cout << endl;
+   
+   for (i = NUM_VALS - 1; i > -1; --i) {
+      cout << courseGrades[i] << " ";
+   }
+   cout << endl;
+   //END HERE
+
+
+   return 0;
+}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+14.4 Iterating through arrays
+
+"Iterating through arrays using loops is commonplace and is an important programming skill to master.
+
+Because array indices are numbered 0 to N - 1 rather than 1 to N, programmers commonly use this for
+loop structure:"
+
+// Iterating through myArray
+for (i = 0; i < numElements; ++i) {
+   // Loop body accessing myArray[i]
+}
+
+"Note that index variable i is initialized to 0, and the loop expression is i < N rather than i <= N.
+If N were 5, the loop's iterations would set i to 0, 1, 2, 3, and 4, for a total of 5 iterations.
+The benefit of the loop structure is that each array element is accessed as myArray[i] rather than
+the more complex myArray[i - 1]."
+
+"Programs commonly iterate through arrays to determine some quantity about the array's items.
+For example, the following program determines the maximum value in a user-entered list."
+
+Figure 14.4.2: Iterating through an array example: Program that finds the max item.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+   const int NUM_ELEMENTS = 8;  // Number of elements
+   int userVals[NUM_ELEMENTS];  // Array of user numbers
+   int i = 0;                   // Loop index
+   int maxVal = 0;              // Computed max
+   
+   // Prompt user to populate array
+   cout << "Enter " << NUM_ELEMENTS << " integer values..." << endl;
+   
+   for (i = 0; i < NUM_ELEMENTS; ++i) {
+      cout << "Value: ";
+      cin >> userVals[i];
+   }
+   
+   // Determine largest (max) number
+   maxVal = userVals[0];        // Largest so far
+   
+   for (i = 0; i < NUM_ELEMENTS; ++i) {
+      if (userVals[i] > maxVal) {
+         maxVal = userVals[i];
+      }
+   }
+   cout << "Max: " << maxVal << endl;
+   
+   return 0;
+}
+
+
+14.4.1: Array iteration
+Given an integer array myVals of size N_SIZE (i.e. int myVals[N_SIZE] ), 
+complete the code to achieve the stated goal.
+
+1) Determine the minimum number in the array, using the same initialization as the maximum
+number example above.
+Answer: 
+minVal =  myVals[0];
+myVals[0]; 
+for (i = 0; i < N_SIZE; ++i) {
+     if (myVals[i] < minVal) {
+          minVal = myVals[i];
+     }
+}
+minVal must be initialized to an element in the array. Using the 0'th element ensures
+the code works for any size array.
+
+2) Count how many negative numbers exist in the array.
+cntNeg = 0;
+for (i = 0; i < N_SIZE; ++i) {
+     if (myVals[i] < 0)  
+     myVals[i] < 0) {
+          ++cntNeg;
+     }
+}
+Either myVals[i] < 0 or myVals[i] <= -1 would be correct to check if an
+element's value is negative.
+
+3) Count how many odd numbers exist in the array.
+cntOdd = 0;
+for (i = 0; i < N_SIZE; ++i) {
+     if ( (myVals[i] % 2) == 1 ) {
+         ++cntOdd;
+     }
+}
+For each odd value found, cntOdd is incremented.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Figure 14.4.3: Iterating through an array example: Program that finds the sum of an
+ array's elements.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+   const int NUM_ELEMENTS = 8; // Number of elements
+   int userVals[NUM_ELEMENTS]; // User numbers
+   int i = 0;                  // Loop index
+   int sumVal = 0;             // For computing sum
+   
+   // Prompt user to populate array
+   cout << "Enter " << NUM_ELEMENTS << " integer values..." << endl;
+   
+   for (i = 0; i < NUM_ELEMENTS; ++i) {
+      cout << "Value: ";
+      cin >> userVals[i];
+   }
+   
+   // Determine sum
+   for (i = 0; i < NUM_ELEMENTS; ++i) {
+      sumVal = sumVal + userVals[i];
+   }
+   
+   cout << "Sum: " << sumVal << endl;
+   
+   return 0;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+14.4.3: Print the sum and average of an array's elements.
+
+Modify the program to print the average (mean) as well as the sum. Hint: You don't actually
+have to change the loop, but rather change what you print.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+   const int NUM_ELEMENTS = 8; // Number of elements
+   int userVals[NUM_ELEMENTS]; // User numbers
+   int i = 0;                  // Loop index
+   int sumVal = 0;             // For computing sum
+   int avg = 0;            // For computing average
+   
+   // Prompt user to populate array
+   cout << "Enter " << NUM_ELEMENTS << " integer values..." << endl;
+
+   for (i = 0; i < NUM_ELEMENTS; ++i) {
+      cout << "Value: " << endl;
+      cin >> userVals[i];
+   }
+   
+   // Determine sum
+   sumVal = 0;
+   
+   for (i = 0; i < NUM_ELEMENTS; ++i) {
+      sumVal = sumVal + userVals[i];
+   }
+   
+   avg = sumVal / 8;
+
+   
+   cout << "Sum: " << sumVal << endl;
+   cout << "Average: " << avg << endl;
+   
+   return 0;
+}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+14.4.2: Finding valyes in arrays
+Challenge activity
+Set numMatches to the number of elements in userValues (having NUM_VALS elements) that equal
+matchValue. Ex: If matchValue = 2 and userValues = {2, 2, 1, 2}, then numMatches = 3.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+   const int NUM_VALS = 4;
+   int userValues[NUM_VALS];
+   int i = 0;
+   int matchValue = 0;
+   int numMatches = -99; // Assign numMatches with 0 before your for loop
+
+   userValues[0] = 2;
+   userValues[1] = 2;
+   userValues[2] = 1;
+   userValues[3] = 2;
+
+   matchValue = 2;
+
+   /* Your solution goes here  */
+   numMatches = 0;
+   for (i = 0; i < NUM_VALS; ++i) {
+      if (userValues[i] == matchValue) {
+         ++numMatches;
+      }
+   }
+
+   cout << "matchValue: " << matchValue << ", numMatches: " << numMatches << endl;
+
+   return 0;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+14.4.3: Populating an array with a for loop.
+Challenge activity
+Write a for loop to populate array userGuesses with NUM_GUESSES integers. Read integers 
+using cin. Ex: If NUM_GUESSES is 3 and user enters 9 5 2, then userGuesses is {9, 5, 2}. 
+
+#include <iostream>
+using namespace std;
+
+int main() {
+   const int NUM_GUESSES = 3;
+   int userGuesses[NUM_GUESSES];
+   int i = 0;
+
+   /* Your solution goes here  */
+   for (int i = 0; i < NUM_GUESSES; i++) {
+     cin >> userGuesses[i];
+   }
+
+   for (i = 0; i < NUM_GUESSES; ++i) {
+        cout << userGuesses[i] << " ";
+  }
+
+   return 0;
+}
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+14.4.4: Array iteration: Sum of excess
+Challenge activity
+Array testGrades contains NUM_VALS test scores. Write a for loop that sets sumExtra to the
+total extra credit received. Full credit is 100, so anything over 100 is extra credit. Ex:
+If testGrades = {101, 83, 107, 90}, then sumExtra = 8, because 1 + 0 + 7 + 0 is 8. 
+
+#include <iostream>
+using namespace std;
+
+int main() {
+   const int NUM_VALS = 4;
+   int testGrades[NUM_VALS];
+   int i = 0;
+   int sumExtra = -9999; // Assign sumExtra with 0 before your for loop
+
+   testGrades[0] = 101;
+   testGrades[1] = 83;
+   testGrades[2] = 107;
+   testGrades[3] = 90;
+
+   sumExtra = 0;
+   for (i = 0; i < NUM_VALS; ++i) {
+      if (testGrades[i] > 100) {
+         sumExtra += (testGrades[i] % 100);
+      }
+   }
+
+   cout << "sumExtra: " << sumExtra << endl;
+   return 0;
+}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+14.4.5: Printing array elements separated by commas.
+Challenge activity
+Write a for loop to print all NUM_VALS elements of array hourlyTemp. Separate elements with
+a comma and space. Ex: If hourlyTemp = {90, 92, 94, 95}, print:
+90, 92, 94, 95
+Note that the last element is not followed by a comma, space, or newline. 
+
+#include <iostream>
+using namespace std;
+
+int main() {
+   const int NUM_VALS = 4;
+   int hourlyTemp[NUM_VALS];
+   int i = 0;
+
+   hourlyTemp[0] = 90;
+   hourlyTemp[1] = 92;
+   hourlyTemp[2] = 94;
+   hourlyTemp[3] = 95;
+
+   for (i = 0; i < NUM_VALS; i++) {
+      if (i == (NUM_VALS - 1)) {
+         cout << hourlyTemp[i];
+      }
+      else { 
+      cout << hourlyTemp[i] << ", ";
+      }
+   }
+
+   cout << endl;
+
+   return 0;
+}
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Multipe Arrays
+14.5.1: Multiple array example: Letter postage cost program.
+
+#include <iostream>
+using namespace std;
+
+int main () {
+   const int NUM_ELEMENTS = 14;        // Number of elements
+   double letterWeights[NUM_ELEMENTS]; // Weights in ounces
+   int postageCosts[NUM_ELEMENTS];     // Costs in cents (usps.com 2013)
+   double userLetterWeight = 0.0;      // Letter weight
+   bool foundWeight = false;           // Found weight specified by user
+   int i = 0;                          // Loop index
+   
+   
+   // Populate letter weight/postage cost arrays
+   letterWeights[i] = 1;    postageCosts[i] =  46; ++i;
+   letterWeights[i] = 2;    postageCosts[i] =  66; ++i;
+   letterWeights[i] = 3;    postageCosts[i] =  86; ++i;
+   letterWeights[i] = 3.5;  postageCosts[i] = 106; ++i;
+   letterWeights[i] = 4;    postageCosts[i] = 152; ++i;
+   letterWeights[i] = 5;    postageCosts[i] = 172; ++i;
+   letterWeights[i] = 6;    postageCosts[i] = 192; ++i;
+   letterWeights[i] = 7;    postageCosts[i] = 212; ++i;
+   letterWeights[i] = 8;    postageCosts[i] = 232; ++i;
+   letterWeights[i] = 9;    postageCosts[i] = 252; ++i;
+   letterWeights[i] = 10;   postageCosts[i] = 272; ++i;
+   letterWeights[i] = 11;   postageCosts[i] = 292; ++i;
+   letterWeights[i] = 12;   postageCosts[i] = 312; ++i;
+   letterWeights[i] = 13;   postageCosts[i] = 332; ++i;
+   
+   // Prompt user to enter letter weight
+   cout << "Enter letter weight (in ounces): ";
+   cin >> userLetterWeight;
+   
+   // Postage costs is based on smallest letter weight greater than
+   // or equal to mailing letter weight
+   foundWeight = false;
+   
+   for (i = 0; (i < NUM_ELEMENTS) && (!foundWeight); ++i) {
+      if( userLetterWeight <= letterWeights[i] ) {
+         foundWeight = true;
+         cout << "Postage for USPS first class mail is ";
+         cout << postageCosts[i] << " cents" << endl;
+      }
+   }
+   
+   if( !foundWeight ) {
+      cout << "Letter is too heavy for USPS first class mail." << endl;
+   }
+   
+   return 0;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+14.5.1: Printing the sum of two array elements
+Challenge activity
+Add each element in origList with the corresponding value in offsetAmount. Print each sum
+followed by a space. Ex: If origList = {40, 50, 60, 70} and offsetAmount = {5, 7, 3, 0},
+print:
+45 57 63 70
+
+#include <iostream>
+using namespace std;
+
+int main() {
+   const int NUM_VALS = 4;
+   int origList[NUM_VALS];
+   int offsetAmount[NUM_VALS];
+   int i = 0;
+
+   origList[0] = 40;
+   origList[1] = 50;
+   origList[2] = 60;
+   origList[3] = 70;
+
+   offsetAmount[0] = 5;
+   offsetAmount[1] = 7;
+   offsetAmount[2] = 3;
+   offsetAmount[3] = 0;
+
+   /* Your solution goes here  */
+   for (i = 0; i < NUM_VALS; ++i) {
+      origList[i] + offsetAmount[i];
+      cout << origList[i] + offsetAmount[i] << " ";
+   }
+
+
+   cout << endl;
+
+   return 0;
+}   
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+14.5.2: Multiple arrays: Key and value 
+Challenge activity
+For any element in keysList with a value greater than 100, print the corresponding value in
+itemsList, followed by a space. Ex: If keysList = {42, 105, 101, 100} and itemsList = 
+{10, 20, 30, 40}, print:
+20 30 
+Since keysList[1] and keysList[2] have values greater than 100, the value of itemsList[1]
+and itemsList[2] are printed. 
+
+#include <iostream>
+using namespace std;
+
+int main() {
+   const int SIZE_LIST = 4;
+   int keysList[SIZE_LIST];
+   int itemsList[SIZE_LIST];
+   int i = 0;
+
+   keysList[0] = 42;
+   keysList[1] = 105;
+   keysList[2] = 101;
+   keysList[3] = 100;
+
+   itemsList[0] = 10;
+   itemsList[1] = 20;
+   itemsList[2] = 30;
+   itemsList[3] = 40;
+
+   /* Your solution goes here  */
+   for (i < 0; i < SIZE_LIST; ++i) {
+      if (keysList[i] > 100) {
+      cout << itemsList[i] << " ";
+      }
+   }
+
+
+   cout << endl;
+
+   return 0;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+14.6.1: Find 2D array max and min.
+Challenge activity
+Find the maximum value and minimum value in milesTracker. Assign the maximum value to maxMiles,
+and the minimum value to minMiles. Sample output for the given program:
+Min miles: -10
+Max miles: 40
+
+#include <iostream>
+using namespace std;
+
+int main( ) {
+   const int NUM_ROWS = 2;
+   const int NUM_COLS = 2;
+   int milesTracker[NUM_ROWS][NUM_COLS];
+   int i = 0;
+   int j = 0;
+   int maxMiles = -99; // Assign with first element in milesTracker before loop
+   int minMiles = -99; // Assign with first element in milesTracker before loop
+
+   milesTracker[0][0] = -10;
+   milesTracker[0][1] = 20;
+   milesTracker[1][0] = 30;
+   milesTracker[1][1] = 40;
+
+   /* Your solution goes here  */
+   for (i = 0; i < NUM_ROWS; i++) {
+         for (j = 0; j < NUM_COLS; j++) {
+            if (i == 0 && j == 0) {
+               maxMiles = milesTracker[i][j];
+               minMiles = milesTracker[i][j];
+            }
+            if (milesTracker[i][j] > maxMiles) {
+               maxMiles = milesTracker[i][j];
+            }
+            else if (milesTracker[i][j] < minMiles) {
+               minMiles = milesTracker[i][j];
+            }
+         }
+   }
+    cout << "Min miles: " << minMiles << endl;
+    cout << "Max miles: " << maxMiles << endl;
+}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+14.7 Problem 14.1
+Read 10 integers into an array. Calculate the average. Display those array elements that
+are greater than the average. For example:
+Reading: 1,2,3,4,5,6,7,8,9,10
+The average is   5.50
+The following are above average: 
+6
+7
+8
+9
+10
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int userArray[10];
+    double sum;
+    double avg;
+
+    //Read 10 integers into an array.
+    for (int i = 0; i <= 9; i++) {
+        cin >> userArray[i];
+    }
+
+    cout << "Reading: ";
+    // Adding comma separation for cout
+    for (int i = 0; i <= 9; i++) {
+        if (i == 9){
+            cout << userArray[i] << endl;
+            break;
+        } else {
+            cout << userArray[i] << ",";
+        }
+    }
+
+    //Calculate the average
+    for (int i = 0; i < 10; ++i) {
+        sum = sum + userArray[i];
+    }
+
+    avg = sum / 10;
+    cout << "The average is " << avg << endl;
+
+    //Display those array elements that are greater than the average.
+    cout << "The following are above average: " << endl;
+    for (int i = 0; i <= 9; i++){
+        if (userArray[i] > avg){
+            cout << userArray[i] << endl;
+        }
+    }
+
+    return 0;
+}
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+14.7 Problem 14.2
+Challenge Activity 
+Load 10 integers into an array, then prompt the user for a number from 0 to 9. Display the
+element at the array position the user selects. For example:
+Reading in: 77, 33, 88, 99, 22, 55, 11, 44, 66, 0
+Enter a number from 0 to 9: 3
+Element number 3 is 99
+
+
+#include <iostream>
+using namespace std;
+
+int main() {
+   int userArray[10];
+   int num;
+
+   //Load 10 integers into an array
+   for (int i = 0; i <= 9; i++) {
+      cin >> userArray[i];
+   }
+   
+   cout<<"Reading in: ";
+   // Adding comma seperation for cout
+   for (int i = 0; i <= 9; i++) {
+      if (i == 9) {
+         cout << userArray[i] << endl;
+         break;
+      } else {
+         cout << userArray[i] <<", ";
+      }
+   }
+
+   //then prompt the user for a number from 0 to 9
+   cout << "Enter a number from 0 to 9: ";
+
+   cin >> num;
+   cout << num << endl;
+
+   if (num < 0 || num > 9) {
+      cout<<"Number is out of range." << endl;
+   } else {
+      cout<<"Element number "<< num <<" is "<< userArray[num] << endl;
+   }
+
+return 0;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+14.9 Problem 14.3
+Challenge Activity
+Read 12 strings into an array, then display them in reverse order. For example:
+Reading in: 
+    Adam
+    Betty
+    Charles
+    Debbie
+    Elaine
+    Frank
+    George
+    Harry
+    Igor
+    Jerry
+    Karen
+    Larry
+Reversed: 
+    Larry
+    Karen
+    Jerry
+    Igor
+    Harry
+    George
+    Frank
+    Elaine
+    Debbie
+    Charles
+    Betty
+    Adam
+
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+
+    string name[12];
+
+    cout << "Reading in: " << endl;
+    for (int i = 0; i < 12; i++) {
+        getline(cin, name[i]);
+        cout << "    " << name[i] << endl;
+    }
+
+    cout << "Reversed: " << endl;
+
+    for (int i = 11; i > -1; i--) {
+        cout << "    " << name[i] << endl;
+    }
+
+    return 0;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
