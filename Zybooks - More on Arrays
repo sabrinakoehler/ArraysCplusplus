@@ -1,0 +1,822 @@
+15.1.1: Warm-up: People's weights (arrays) C++
+LAB ACTIVITY
+
+(1) Prompt the user to enter five numbers, being five people's weights.
+Store the numbers in an array of doubles. Output the array's numbers on one line,
+each number followed by one space. (2 pts) 
+Ex:
+Enter weight 1: 236
+Enter weight 2: 89.5
+Enter weight 3: 142
+Enter weight 4: 166.3
+Enter weight 5: 93
+
+You entered: 236 89.5 142 166.3 93
+(2) Also output the total weight, by summing the array's elements. (1 pt)
+
+(3) Also output the average of the array's elements. (1 pt)
+
+(4) Also output the max array element. (2 pts) 
+
+
+Ex:
+Enter weight 1: 236
+Enter weight 2: 89.5
+Enter weight 3: 142
+Enter weight 4: 166.3
+Enter weight 5: 93
+
+You entered: 236 89.5 142 166.3 93
+Total weight: 726.8
+Average weight: 145.36
+Max weight: 236
+
+#include <iostream>
+using namespace std;
+
+int main() {
+
+   /* Type your code here. */
+   const int NUM_ELEMENTS = 5;              //num of elements
+   double userWeights[NUM_ELEMENTS];          //array of user weights
+   int i = 0;                             // loop index
+   double maxWeight = 0.0;                //For computing maximum weight
+   double sum = 0.0;
+   double avgWeight = 0.0;
+   
+   //Prompt user to enter 5 weights
+   int x = 0;                                   //declare integer to hold count
+   for (i = 0; i < NUM_ELEMENTS; ++i) {
+      cout<< "Enter weight " << ++x << ": ";
+      cin>>userWeights[i];
+      cout << endl;
+   }
+   //Display inputs
+   cout<<endl;
+   cout << "You entered: ";
+   for (i = 0; i < NUM_ELEMENTS; ++i) {
+      cout << userWeights[i] << " ";
+   }
+   cout<<endl;
+   // Determine largest (max) weight
+   double max = userWeights[0];                     // Largest weight so far 
+   for (i = 0; i < NUM_ELEMENTS; ++i) {
+      if (userWeights[i] > max) {
+         max = userWeights[i];
+      }
+   }
+   for (i = 0; i < NUM_ELEMENTS; ++i) {             //Total weight
+       sum = sum + userWeights[i];
+   }
+   for (i = 0; i < NUM_ELEMENTS; ++i) {             //Average of weights
+       avgWeight = sum/5;
+   }
+   cout <<"Total weight: " <<sum << endl;
+   cout <<"Average weight: " <<avgWeight << endl;
+   cout<<"Max weight: " <<max<<endl;
+   
+   return 0;
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////
+Modifying an array during iteration example: Converting negatives to 0 program.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+   const int NUM_ELEMENTS = 8;  // Number of elements
+   int userVals[NUM_ELEMENTS];  // User values
+   int i = 0;                   // Loop index
+   
+   // Prompt user to input values
+   cout << "Enter " << NUM_ELEMENTS << " integer values..." << endl;
+   for (i = 0; i < NUM_ELEMENTS; ++i) {
+      cout << "Value: ";
+      cin >> userVals[i];
+   }
+   
+   // Convert negatives to 0
+   for (i = 0; i < NUM_ELEMENTS; ++i) {
+      if (userVals[i] < 0) {
+         userVals[i] = 0;
+      }
+   }
+   
+   // Print numbers
+   cout << "New numbers: ";
+   for (i = 0; i < NUM_ELEMENTS; ++i) {
+      cout << userVals[i] << " ";
+   }
+   
+   return 0;
+}
+
+RESULTS
+Enter 8 integer values...
+Value: 5
+Value: 67
+Value: -5
+Value: -4
+Value: 5
+Value: 6
+Value: 6
+Value: 4
+New numbers: 5 67 0 0 5 6 6 4
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+15.3.2: Modifying an array during iteration example: Doubling element values
+Participation ACTIVITY
+
+Complete the following program to double each number in the array.
+
+
+#include <iostream>
+using namespace std;
+
+int main() {
+   const int NUM_ELEMENTS = 8;  // Number of elements
+   int userVals[NUM_ELEMENTS];  // User values
+   int i = 0;                   // Loop index
+   
+   // Prompt user to input values
+   cout << "Enter " << NUM_ELEMENTS << " integer values..." << endl;
+   for (i = 0; i < NUM_ELEMENTS; ++i) {
+      cout << "Value: " << endl;
+      cin >> userVals[i];
+   }
+   
+   // Double each element -- FIXME write this loop
+   for (i = 0; i < NUM_ELEMENTS; ++i) {
+      userVals[i] = userVals[i]*2;
+   }
+  
+   // Print numbers
+   cout << "New numbers: ";
+   for (i = 0; i < NUM_ELEMENTS; ++i) {
+      cout << userVals[i] << " ";
+   }
+   
+   return 0;
+}
+
+INPUT:  5 67 -5 -4 5 6 6 4
+OUTPUT:
+Enter 8 integer values...
+Value: 
+Value: 
+Value: 
+Value: 
+Value: 
+Value: 
+Value: 
+Value: 
+New numbers: 10 134 -10 -8 10 12 12 8 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+Figure 15.3.2: Array copying: Converting negatives to 0 program.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+   const int NUM_ELEMENTS = 8;   // Number of elements
+   int userVals[NUM_ELEMENTS];   // User numbers
+   int copiedVals[NUM_ELEMENTS]; // Copied/modified user numbers
+   int i = 0;                    // Loop index
+   
+   // Prompt user for input values
+   cout << "Enter " << NUM_ELEMENTS << " integer values..." << endl;
+   for (i = 0; i < NUM_ELEMENTS; ++i) {
+      cout << "Value: ";
+      cin >> userVals[i];
+   }
+   
+   // Copy userNums to copiedNums array
+   for (i = 0; i < NUM_ELEMENTS; ++i) {
+      copiedVals[i] =  userVals[i];
+   }
+   
+   // Convert negatives to 0
+   for (i = 0; i < NUM_ELEMENTS; ++i) {
+      if (copiedVals[i] < 0) {
+         copiedVals[i] = 0;
+      }
+   }
+   
+   // Print numbers
+   cout << endl << "Original and new values: " << endl;
+   for (i = 0; i < NUM_ELEMENTS; ++i) {
+      cout << userVals[i] << " became " << copiedVals[i] << endl;
+   }
+   
+   return 0;
+}
+
+RESULTS
+Enter 8 integer values...
+Value: 12
+Value: -5
+Value: 34
+Value: 75
+Value: -14
+Value: 33
+Value: 12
+Value: -104
+
+Original and new values: 
+12 became 12
+-5 became 0
+34 became 34
+75 became 75
+-14 became 0
+33 became 33
+12 became 12
+-104 became 0
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+15.3.1: Decrement array elements
+Challenge Problems
+Write a loop that subtracts 1 from each element in lowerScores. If the element was already 0 or 
+negative, assign 0 to the element. Ex: lowerScores = {5, 0, 2, -3} becomes {4, 0, 1, 0}. 
+
+#include <iostream>
+using namespace std;
+
+int main() {
+   const int SCORES_SIZE = 4;
+   int lowerScores[SCORES_SIZE];
+   int i = 0;
+
+   lowerScores[0] = 5;
+   lowerScores[1] = 0;
+   lowerScores[2] = 2;
+   lowerScores[3] = -3;
+
+   /* Your solution goes here  */
+   // Convert negatives to 0
+   for (i = 0; i < SCORES_SIZE; ++i) {
+      lowerScores[i] = lowerScores[i] -1;
+      if (lowerScores[i] <= 0) {
+         lowerScores[i] = 0;
+      }
+   }
+  
+   // Print new numbers
+   for (i = 0; i < SCORES_SIZE; ++i) {
+      cout << lowerScores[i] << " ";
+   }
+   cout << endl;
+
+   return 0;
+}
+INPUT: 5, 0, 2, -3
+OUTPUT: 4, 0, 1, 0
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+15.3.2: Copy and modify array elements.
+Challenge ACTIVITY
+
+Write a loop that sets newScores to oldScores shifted once left, with element 0 copied to the end.
+Ex: If oldScores = {10, 20, 30, 40}, then newScores = {20, 30, 40, 10}. 
+
+#include <iostream>
+using namespace std;
+
+int main() {
+   const int SCORES_SIZE = 4;
+   int oldScores[SCORES_SIZE];
+   int newScores[SCORES_SIZE];
+   int i = 0;
+
+   oldScores[0] = 10;
+   oldScores[1] = 20;
+   oldScores[2] = 30;
+   oldScores[3] = 40;
+
+   /* Your solution goes here  */
+   newScores[3] = oldScores[0];
+      for(i = 0; i < SCORES_SIZE -1; i++) {
+         newScores[i] = oldScores[i +1];
+      }
+      for (i = 0; i < SCORES_SIZE; i++) {
+         if (i == (SCORES_SIZE - 1)) {
+            newScores[i] = oldScores[0];
+         }
+         else {
+            newScores[i] = oldScores[i + 1];
+         }
+      }
+
+   for (i = 0; i < SCORES_SIZE; ++i) {
+      cout << newScores[i] << " ";
+   }
+   cout << endl;
+
+   return 0;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+15.3.3: Modify array elements using other elements.
+Write a loop that sets each array element to the sum of itself and the next element, except for
+the last element which stays the same. Be careful not to index beyond the last element. Ex:
+
+Initial scores:        10, 20, 30, 40
+Scores after the loop: 30, 50, 70, 40
+
+The first element is 30 or 10 + 20, the second element is 50 or 20 + 30, and the third element is
+70 or 30 + 40. The last element remains the same.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+   const int SCORES_SIZE = 4;
+   int bonusScores[SCORES_SIZE];
+   int i = 0;
+
+   bonusScores[0] = 10;
+   bonusScores[1] = 20;
+   bonusScores[2] = 30;
+   bonusScores[3] = 40;
+
+   /* Your solution goes here  */
+   for (i = 0; i < SCORES_SIZE-1; i++) {
+        bonusScores[i] = (bonusScores [i] + bonusScores[i+1]);
+   }
+   
+   for (i = 0; i < SCORES_SIZE; ++i) {
+      cout << bonusScores[i] << " ";
+   }
+   cout << endl;
+
+   return 0;
+}
+INPUT: 10, 20, 30, 40
+OUTPUT: 30 50 70 40
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+15.3.4: Modify an array's elements
+Challenge ACTIVITY
+
+Double any element's value that is less than minVal. Ex: If minVal = 10, then
+dataPoints = {2, 12, 9, 20} becomes {4, 12, 18, 20}. 
+
+#include <iostream>
+using namespace std;
+
+int main() {
+   const int NUM_POINTS = 4;
+   int dataPoints[NUM_POINTS];
+   int minVal = 0;
+   int i = 0;
+
+   dataPoints[0] = 2;
+   dataPoints[1] = 12;
+   dataPoints[2] = 9;
+   dataPoints[3] = 20;
+
+   minVal = 10;
+
+   /* Your solution goes here  */
+   for (i = 0; i < NUM_POINTS; ++i) {
+    if (dataPoints[i] < minVal) {
+        dataPoints[i] = (dataPoints[i] * 2);
+      }
+   }
+
+   for (i = 0; i < NUM_POINTS; ++i) {
+      cout << dataPoints[i] << " " ;
+   }
+   cout << endl;
+
+   return 0;
+}
+
+INPUT: 2, 12, 9, 20
+OUTPUT: 4 12 18 20
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+Figure 15.4.4: Program with correct loop bound: Running the program yields the correct output.
+
+#include <iostream>
+using namespace std;
+
+int main() {
+   const int NUM_ELEMENTS = 8; // Number of elements
+   int userVals[NUM_ELEMENTS]; // User numbers
+   int i = 0;                  // Loop index
+   int tempVal = 0;            // Temp variable for swapping
+   
+   // Prompt user to input values
+   cout << "Enter " << NUM_ELEMENTS << " integer values..." << endl;
+   for (i = 0; i < NUM_ELEMENTS; ++i) {
+      cout << "Value: ";
+      cin >> userVals[i];
+   }
+   
+   // Reverse array's elements
+   for (i = 0; i < (NUM_ELEMENTS / 2); ++i) {
+      tempVal = userVals[i];                        // Temp for swap
+      userVals[i] = userVals[NUM_ELEMENTS - 1 - i]; // First part of swap
+      userVals[NUM_ELEMENTS - 1 - i] = tempVal;     // Second complete
+   }
+   
+   // Print numbers
+   cout << endl << "New values: ";
+   for (i = 0; i < NUM_ELEMENTS; ++i) {
+      cout << userVals[i] << " ";
+   }
+   
+   return 0;
+}
+
+OUTPUT: 
+Enter 8 integer values...
+Value: 10
+Value: 20
+Value: 30
+Value: 40
+Value: 50
+Value: 60
+Value: 70
+Value: 80
+
+New values: 80 70 60 50 40 30 20 10
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+Figure 15.5.1: Array parameters in an average test score calculation program.
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+double CalculateAverage(double scoreVals[], int numVals) {
+   int i = 0;
+   double scoreSum = 0.0;
+   
+   for (i = 0; i < numVals; ++i) {
+      scoreSum = scoreSum + scoreVals[i];
+   }
+   
+   return scoreSum / numVals;
+}
+
+int main() {
+   const int NUM_SCORES = 4;    // Array size
+   double testScores[NUM_SCORES];  // User test scores
+   int i = 0;
+   double averageScore = 0.0;
+   
+   // Prompt user to enter test scores
+   cout << "Enter " << NUM_SCORES << " test scores:" << endl;
+   for (i = 0; i < NUM_SCORES; ++i) {
+      cout << "Test score: ";
+      cin >> testScores[i];
+   }
+   cout << endl;
+   
+   // Call function to calculate average
+   averageScore = CalculateAverage(testScores, NUM_SCORES);
+   cout << "Average adjusted test score: " 
+        << averageScore << endl;
+   
+   return 0;
+}
+OUTPUT:
+Enter 4 test scores:
+Test score: 90.5
+Test score: 92.0
+Test score: 87.5
+Test score: 97.0
+
+Average adjusted test score: 91.75
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+Figure 15.5.2: Normal and const array parameters in test score adjustment and averaging program.
+
+#include <iostream>
+using namespace std;
+
+void AdjustScores(double scoreVals[], int numVals, 
+                  double scoreAdj) {
+   int i = 0;
+   
+   for (i = 0; i < numVals; ++i) {
+      scoreVals[i] = scoreVals[i] + scoreAdj;
+   }
+
+   return;
+}
+
+void PrintScores(const double scoreVals[], int numVals) {
+   int i = 0;
+   
+   for (i = 0; i < numVals; ++i) {
+      cout << " " << scoreVals[i];
+   }
+   cout << endl;
+
+   return;
+}
+
+double CalculateAverage(const double scoreVals[], int numVals) {
+   int i = 0;
+   double scoreSum = 0.0;
+   
+   for (i = 0; i < numVals; ++i) {
+      scoreSum = scoreSum + scoreVals[i];
+   }
+   
+   return scoreSum / numVals;
+}
+
+int main() {
+   const int NUM_SCORES = 4;    // Array size
+   double testScores[NUM_SCORES];  // User test scores
+   int i = 0;
+   double averageScore = 0.0;
+   
+   // Prompt user to enter test scores
+   cout << "Enter " << NUM_SCORES << " test scores:" << endl;
+   for (i = 0; i < NUM_SCORES; ++i) {
+      cout << "Test score: ";
+      cin >> testScores[i];
+   }
+   cout << endl;
+   
+   // Print original scores
+   cout << "Original test scores: ";
+   PrintScores(testScores, NUM_SCORES);
+
+   AdjustScores(testScores, NUM_SCORES, 2.0);
+
+   cout << "Adjusted test scores: ";
+   PrintScores(testScores, NUM_SCORES);
+
+   // Call function to calculate average
+   averageScore = CalculateAverage(testScores, NUM_SCORES);
+   cout << "Average adjusted test score: " 
+        << averageScore << endl;
+   
+   return 0;
+}
+
+OUTPUT:
+Enter 4 test scores:
+Test score: 90.0
+Test score: 95.5
+Test score: 97.0
+Test score: 92.5
+
+Original test scores:  90 95.5 97 92.5
+Adjusted test scores:  92 97.5 99 94.5
+Average adjusted test score: 95.75
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+15.5.1: Modify an array parameter.
+Challenge ACTIVITY
+
+Write a function SwapArrayEnds() that swaps the first and last elements of the function's 
+array parameter. Ex: sortArray = {10, 20, 30, 40} becomes {40, 20, 30, 10}. The array's size
+may differ from 4. 
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+void SwapArrayEnds(int sortArray[], int SORT_ARR_SIZE){
+    int first = sortArray[0];
+    int last = sortArray[SORT_ARR_SIZE - 1];
+    
+    sortArray[0] = last;
+    sortArray[SORT_ARR_SIZE - 1] = first;
+}
+
+int main() {
+  const int SORT_ARR_SIZE = 4;
+  int sortArray[SORT_ARR_SIZE];
+  int i = 0;
+  
+  sortArray[0] = 10;
+  sortArray[1] = 20;
+  sortArray[2] = 30;
+  sortArray[3] = 40;
+  
+  SwapArrayEnds(sortArray, SORT_ARR_SIZE);
+  
+  for (i = 0; i < SORT_ARR_SIZE; ++i) {
+    cout << sortArray[i] << " ";
+  }
+  cout << endl;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+Figure 15.6.1: FindMaxAbsValueIncorrect() incorrectly modifies inputVals array to find element
+with the largest absolute value.
+
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+float FindMaxAbsValueIncorrect(float inputVals[], int numVals) {
+   int i = 0;
+   float maxAbsVal = 0.0;
+   
+   // Incorrectly updates inputVals to calculate absolute value
+   // of array elements
+   for (i = 0; i < numVals; ++i) {
+      inputVals[i] = fabs(inputVals[i]);
+   }
+   
+   maxAbsVal = inputVals[0];
+   for (i = 0; i < numVals; ++i) {
+      if (inputVals[i] > maxAbsVal) {
+         maxAbsVal = inputVals[i];
+      }
+   }
+   
+   return maxAbsVal;
+}
+
+int main() {
+   const int NUM_VALUES = 5;
+   // Array of changes in temperatures
+   float tempChanges[NUM_VALUES] = {10.0, 0.5, -5.1, -11.2, 3.0};
+   float maxAbsChange = 0.0;
+   int i = 0;
+   
+   // Print array before function call
+   cout << "tempChanges array before function call: ";
+   for(i = 0; i < NUM_VALUES; ++i) {
+      cout << tempChanges[i] << " ";
+   }
+   cout << endl;
+   
+   // Find the largest temperature change, and print result.
+   maxAbsChange = FindMaxAbsValueIncorrect(tempChanges, NUM_VALUES);
+   cout << "Max absolute temperature change: " << maxAbsChange << endl;
+   
+   // Print array before function call
+   cout << "tempChanges array after function call:  ";
+   for(i = 0; i < NUM_VALUES; ++i) {
+      cout << tempChanges[i] << " ";
+   }
+   cout << endl;
+   
+   return 0;
+}
+OUTPUT:
+tempChanges array before function call: 10 0.5 -5.1 -11.2 3 
+Max absolute temperature change: 11.2
+tempChanges array after function call:  10 0.5 5.1 11.2 3
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+Figure 15.6.2: FindMaxAbsValue() computes the largest absolute value without modifying the array.
+
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+float FindMaxAbsValue(const float inputVals[], int numVals) {
+   int i = 0;
+   float maxAbsVal = 0.0;
+   float inputAbsVal = 0.0;
+   
+   maxAbsVal = fabs(inputVals[0]);
+   for (i = 0; i < numVals; ++i) {
+      inputAbsVal = fabs(inputVals[i]);
+      if (inputAbsVal > maxAbsVal) {
+         maxAbsVal = inputAbsVal;
+      }
+   }
+   
+   return maxAbsVal;
+}
+
+
+int main() {
+   const int NUM_VALUES = 5;
+   // Array of changes in temperatures
+   float tempChanges[NUM_VALUES] = {10.0, 0.5, -5.1, -11.2, 3.0};
+   float maxAbsChange = 0.0;
+   int i = 0;
+   
+   // Print array before function call
+   cout << "tempChanges array before function call: ";
+   for(i = 0; i < NUM_VALUES; ++i) {
+      cout << tempChanges[i] << " ";
+   }
+   cout << endl;
+   
+   // Find the largest temperature change, and print result.
+   maxAbsChange = FindMaxAbsValue(tempChanges, NUM_VALUES);
+   cout << "Max absolute temperature change: " << maxAbsChange << endl;
+   
+   // Print array before function call
+   cout << "tempChanges array after function call:  ";
+   for(i = 0; i < NUM_VALUES; ++i) {
+      cout << tempChanges[i] << " ";
+   }
+   cout << endl;
+   
+   return 0;
+}
+ 
+tempChanges array before function call: 10 0.5 -5.1 -11.2 3 
+Max absolute temperature change: 11.2
+tempChanges array after function call:  10 0.5 -5.1 -11.2 3
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+LAB 14
+"Write a program to ask the user to enter 6 numbers and store them into an integer array.
+Then examine the array, if the numbers in the array are all unique, 
+display message “All unique!”, otherwise display the message “Not all unique!”.
+
+Directions: Use the following program structure for your main. You may create more
+functions if you wish, but it is not required.
+int main() {
+    int myArray[6];
+     // code to fill in the array from the user
+     // code to determine if all of the values are unique
+    return 0;
+}
+
+NOTE: DO NOT USE GLOBAL VARIABLES!!!!!
+
+ALSO: DO NOT USE ANY ASPECT OF C++ WHICH IS NOT COVERED IN THIS COURSE.
+This includes libraries, etc."
+
+
+
+#include <iostream>
+using namespace std;
+
+int main() {
+   int myArray[6];    //User numbers in array
+   int i = 0;        //Loop index
+   int j = 0;        //Loop to check for duplicates
+   int oldValue = 0;    //Store original array for duplicates
+   int newValue = 0;    //Store new array for if all unique
+   
+   // code to fill in the array from the user
+   for (i = 0; i < 6; ++i) {
+      cout << "enter a number: ";
+      cin >> myArray[i];
+      cout << myArray[i] << endl;
+   }
+   // code to determine if all of the values are unique
+   for (i = 0; i < 6; i++) {
+      oldValue = myArray[i];
+      for (j = i + 1; j < 6; j++) {
+         if (oldValue == myArray[j]) {
+            newValue = 1;
+         }
+      }
+   }
+   if (newValue == 1) {
+      cout << "Not all unique!" << endl;
+   }
+   else {
+      cout << "All unique!";
+   }
+   
+return 0;
+}
+
+
+RUN #1
+INPUT: 1 87 3 19 56 777
+OUTPUT:
+ALL unique!
+
+RUN #2
+INPUT: 8 9 10 8 10 788
+OUTPUT: 
+Not all unique!
+
+RUN #3
+INPUT: 1 3 5 7 9 11
+OUTPUT:
+
+RUN #4
+INPUT: 2 2 2 2 2 2 
+OUTPUT: 
+
+RUN #5
+INPUT:11 22 33 44 55 66
+OUTPUT:
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
